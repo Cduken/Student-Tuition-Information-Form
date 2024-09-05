@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Tuition</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    
+    <div class="wrapper">
+    <h2>Student Tuition Information</h2>
+
+        <form action="#" id="tuitionForm">
+            <div class="input-form">
+                <label>Student's Name:</label>
+                <input type="text" id="name" required>
+                <a href="#"><i class='bx bxs-user'></i></a>
+            </div>
+
+            <div class="input-form">
+                <label>Tuition Fee:</label>
+                <input type="number" id="tuitionFee" required>
+                <a href="#"><i class='bx bx-money-withdraw'></i></a>
+            </div>
+
+            <div class="input-form">
+                <label>Miscellaneous Fee:</label>
+                <input type="number" id="miscFee" required>
+                <a href="#"><i class='bx bx-money'></i></a>
+            </div>
+
+            <div class="input-form">
+                <label>Other Fee:</label>
+                <input type="number" id="otherFee" required>
+                <a href="#"><i class='bx bxs-wallet' ></i></a>
+            </div>
+        </form>
+
+        <button class="button" onclick="displayInfo()">Submit</button>
+
+        <div id="result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function displayInfo() {
+            // Get input values
+            const name = document.getElementById('name').value;
+            const tuitionFee = parseFloat(document.getElementById('tuitionFee').value) || 0;
+            const miscFee = parseFloat(document.getElementById('miscFee').value) || 0;
+            const otherFee = parseFloat(document.getElementById('otherFee').value) || 0;
+
+            if (name || tuitionFee || miscFee || otherFee) {
+                const totalFee = tuitionFee + miscFee + otherFee;
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.border = '1px solid rgba(0, 0, 0, 0.255)';
+
+                resultDiv.innerHTML = `
+                    <div class="result-container">
+                        <div class="result-info">
+                            <p><strong>Name:</strong> ${name}</p>
+                            <p><strong>Tuition Fee:</strong> ₱${tuitionFee.toFixed(2)}</p>
+                            <p><strong>Miscellaneous Fee:</strong> ₱${miscFee.toFixed(2)}</p>
+                            <p><strong>Other Fee:</strong> ₱${otherFee.toFixed(2)}</p>
+                            <p><strong>Total Tuition Fee:</strong> ₱${totalFee.toFixed(2)}</p>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="editInfo()">Edit</button>
+                            <button class="delete-btn" onclick="deleteInfo()">Delete</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('tuitionForm').reset();
+            } else {
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.border = 'none';
+                resultDiv.innerHTML = '';
+            }
+        }
+
+        function editInfo() {
+            document.getElementById('name').value = document.querySelector('.result-info p:nth-child(1)').textContent.split(': ')[1];
+            document.getElementById('tuitionFee').value = document.querySelector('.result-info p:nth-child(2)').textContent.split('₱')[1];
+            document.getElementById('miscFee').value = document.querySelector('.result-info p:nth-child(3)').textContent.split('₱')[1];
+            document.getElementById('otherFee').value = document.querySelector('.result-info p:nth-child(4)').textContent.split('₱')[1];
+        }
+
+        function deleteInfo() {
+            document.getElementById('name').value = '';
+            document.getElementById('tuitionFee').value = '';
+            document.getElementById('miscFee').value = '';
+            document.getElementById('otherFee').value = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('result').style.border = 'none';
+        }
+    </script>
+    
+</body>
+</html>
